@@ -1,4 +1,42 @@
-<div id="container">
-  <strong>{{ name }}</strong>
-  <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<div>
+  <div style="display: flex; justify-content: flex-end; margin: 4px;">
+    <ion-button size="small" (click)="openTaskModal()">
+      New task
+      <ion-icon slot="start" name="add"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let task of tasks">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{task.title}}</ion-card-title>
+            </ion-card-header>
+    
+            <ion-card-content>
+              {{task.description}}
+            </ion-card-content>
+
+            <ion-button fill="clear" (click)="loadTaskForUpdate(task.id)">
+              <ion-icon slot="start" name="create"></ion-icon>
+              Update
+            </ion-button>
+            
+            <ion-button fill="clear" (click)="presentAlert(task.id)">
+              <ion-icon slot="start" name="trash"></ion-icon>
+              Delete
+            </ion-button>
+            
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
 </div>
+
+
+

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isNewTask ? 'Update Task' : 'Add New Task' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="submitTask()">
+    <ion-item>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input [(ngModel)]="task.title" name="title" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea [(ngModel)]="task.description" name="description"></ion-textarea>
+    </ion-item>
+    <ion-footer>
+      <ion-button expand="full" type="submit">{{ isNewTask ? 'Update Task' : 'Save Task' }}</ion-button>
+    </ion-footer>
+  </form>
+</ion-content>
