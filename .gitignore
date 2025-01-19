@@ -1,0 +1,3 @@
+*.env
+cloud-back/firebase-key/firebase-service-account.json
+**/node_modules/
