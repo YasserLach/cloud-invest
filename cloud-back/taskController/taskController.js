@@ -10,7 +10,7 @@ const addNewTask = async (req,res) =>{
           }
           try {
             const task = await db.collection('tasks').add(value);
-            res.status(201).send("Task added successfully");
+            res.status(201).send({ id: task.id, ...value });
           } catch (err) {
             res.status(500).send('Error creating task');
           }
@@ -31,35 +31,64 @@ const getTasks = async (req,res) =>{
 }
 
 
-const deleteTask = async (req,res) =>{
+const deleteTask = async (req, res) => {
+    try {
+      const taskId = req.params.id;
+      const task = await db.collection('tasks').doc(taskId).get();
+      
+      if (!task.exists) {
+        return res.status(404).json({ message: 'Task not found' });
+      }
+  
+      const deletedTask = await db.collection('tasks').doc(taskId).delete();
+      res.status(200).json({ message: "Task deleted successfully" }); // send JSON response
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting task', error: error.message });
+    }
+  };
+
+  const updateTask = async (req, res) => {
+    try {
+      const taskId = req.params.id;
+      
+      // Validate the input data
+      const { error, value } = validateTask(req.body);
+      if (error) {
+        return res.status(400).send(error.details[0].message);
+      }
+  
+      // Fetch the task from the database
+      const taskRef = db.collection('tasks').doc(taskId);
+      const taskSnapshot = await taskRef.get();
+      if (!taskSnapshot.exists) {
+        return res.status(404).send('Task not found');
+      }
+  
+      // Update the task in the database
+      await taskRef.update(value);
+  
+      // Fetch the updated task from the database
+      const updatedTaskSnapshot = await taskRef.get();
+      const updatedTask = updatedTaskSnapshot.data();
+  
+      // Return the updated task in the response
+      res.status(200).json(updatedTask); 
+    } catch (error) {
+      console.error('Error updating task:', error);
+      res.status(500).send('Error updating task');
+    }
+  }
+
+const getTaskById = async (req,res) =>{
     try{
         const taskId = req.params.id;
         const task = await db.collection('tasks').doc(taskId).get();
         if (!task.exists) {
             return res.status(404).send('Task not found');
           }
-            await db.collection('tasks').doc(taskId).delete();
-            res.send('Task deleted successfully');
+        res.status(200).send({ id: task.id, ...task.data() });
     } catch (error) {
         res.send('Error getting task');
-    }
-}
-
-const updateTask = async (req,res) =>{
-    try{
-        const taskId = req.params.id;
-        const { error, value } = validateTask(req.body);
-        if (error) {
-            return res.status(400).send(error.details[0].message);
-          }
-        const task = await db.collection('tasks').doc(taskId).get();
-        if (!task.exists) {
-            return res.status(404).send('Task not found');
-          }
-        await db.collection('tasks').doc(taskId).update(value);
-        res.send('Task updated successfully');
-    } catch (error) {
-        res.send('Error updating task');
     }
 }
 
@@ -67,5 +96,6 @@ module.exports = {
     addNewTask,
     getTasks,
     deleteTask,
-    updateTask
+    updateTask,
+    getTaskById
 }
