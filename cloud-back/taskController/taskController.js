@@ -51,28 +51,20 @@ const deleteTask = async (req, res) => {
     try {
       const taskId = req.params.id;
       
-      // Validate the input data
       const { error, value } = validateTask(req.body);
       if (error) {
         return res.status(400).send(error.details[0].message);
       }
   
-      // Fetch the task from the database
       const taskRef = db.collection('tasks').doc(taskId);
       const taskSnapshot = await taskRef.get();
       if (!taskSnapshot.exists) {
         return res.status(404).send('Task not found');
       }
   
-      // Update the task in the database
       await taskRef.update(value);
-  
-      // Fetch the updated task from the database
       const updatedTaskSnapshot = await taskRef.get();
-      const updatedTask = updatedTaskSnapshot.data();
-  
-      // Return the updated task in the response
-      res.status(200).json(updatedTask); 
+      res.status(200).send({ id: updatedTaskSnapshot.id, ...updatedTaskSnapshot.data() });
     } catch (error) {
       console.error('Error updating task:', error);
       res.status(500).send('Error updating task');
