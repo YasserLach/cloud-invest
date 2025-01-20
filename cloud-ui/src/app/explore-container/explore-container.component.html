@@ -1,9 +1,14 @@
 <div>
-  <div style="display: flex; justify-content: flex-end; margin: 4px;">
-    <ion-button size="small" (click)="openTaskModal()">
-      New task
-      <ion-icon slot="start" name="add"></ion-icon>
-    </ion-button>
+  <div class="header-section">
+    <div></div>
+    <div></div>
+    <div class="customSection">
+      <ion-searchbar placeholder="Search" class="search-bar" [(ngModel)]="searchTerm" (ionInput)="onSearchChange()"></ion-searchbar>
+      <ion-button size="default" (click)="openTaskModal()">
+        New task
+        <ion-icon slot="start" name="add"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 
   <div>

@@ -1,0 +1,16 @@
+.header-section {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .customSection {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .search-bar {
+    width: auto;
+  }
+  

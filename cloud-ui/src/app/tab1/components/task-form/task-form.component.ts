@@ -9,8 +9,8 @@ import { Task } from '../../../models/task'
 })
 export class TaskFormComponent {
 
-  @Input() task: Task = new Task('', ''); 
-  isNewTask = true;
+  @Input() task!: Task; 
+  isNewTask !: boolean;
 
   constructor(private modalController: ModalController) {}
 

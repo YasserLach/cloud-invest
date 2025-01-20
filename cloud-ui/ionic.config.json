@@ -1,5 +1,7 @@
 {
   "name": "cloud-ui",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

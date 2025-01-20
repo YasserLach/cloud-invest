@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ isNewTask ? 'Update Task' : 'Add New Task' }}</ion-title>
+    <ion-title>{{ !isNewTask ? 'Update Task' : 'Add New Task' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
@@ -18,7 +18,7 @@
       <ion-textarea [(ngModel)]="task.description" name="description"></ion-textarea>
     </ion-item>
     <ion-footer>
-      <ion-button expand="full" type="submit">{{ isNewTask ? 'Update Task' : 'Save Task' }}</ion-button>
+      <ion-button expand="full" type="submit">{{ !isNewTask ? 'Update Task' : 'Save Task' }}</ion-button>
     </ion-footer>
   </form>
 </ion-content>

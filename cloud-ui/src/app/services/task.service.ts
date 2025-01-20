@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Task } from '../models/task';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class TaskService {
 
   constructor(private http:HttpClient) { }
 
-  private apiUrl = 'http://localhost:3000/tasks';
+  private apiUrl = environment.apiUrl;
   
 
   getAllTasks(): Observable<Task[]> {
@@ -37,7 +38,7 @@ export class TaskService {
     );
   }
 
-  updateTask(task:Task,id:string): Observable<Task> {
+  updateTask(task:any,id:string): Observable<Task> {
     return this.http.put<Task>(this.apiUrl+'/'+id,task).pipe(
       catchError((error) => {
         return throwError(() => new Error('Failed to update task. Please try again later.'));
