@@ -78,3 +78,16 @@ This project follows a Model-View-Controller (MVC) architecture :
         
         4. Server (server.js):
             - Entry point for the application
+## Android APK: Build and Install Instructions
+
+    1. Navigate to the frontend directory :
+        cd cloud-ui
+    
+    2. Build the Ionic Application
+        ionic build
+    
+    3. Build the Android APK 
+        ionic capacitor build android
+
+        This will open Android Studio with the project loaded.
+            -In Android Studio, go to Build > Build Bundle(s) / APK(s) > Build APK(s).
